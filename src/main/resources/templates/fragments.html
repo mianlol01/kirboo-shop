@@ -1,0 +1,74 @@
+<!-- templates/fragments.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>KIRBBO</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+	<!-- Definición de un fragmento de header -->
+	<div th:fragment="navbar">
+		<nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+			<div class="container-fluid nav-custom-container">
+				<img class="logo me-2" src="https://www.pngmart.com/files/23/Kirby-Face-PNG-Transparent.png" alt="" />
+				<h1 class="fs-1 nav-titulo fw-bold">KIRBBO</h1>
+
+				<button class="navbar-toggler btn-nav" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<!-- Menú alineado a la derecha -->
+					<ul class="navbar-nav ms-auto ul-nav-container">
+						<li class="nav-item">
+							<a class="nav-link fs-3 fw-bold" href="/">INICIO</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link fs-3 fw-bold" href="/menu">MENÚ</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link fs-3 fw-bold" href="/ordenar">ORDENAR</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link fs-3 fw-bold" href="/pedidos">PEDIDOS</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link fs-3 fw-bold" href="/usuario">USUARIO</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+	<!-- Definición de un fragmento de footer -->
+	<div th:fragment="footer">
+		<div class="container-fluid footer-container text-center pb-3 mt-5 text-white d-flex flex-column">
+			<h5 class="fs-2 fw-bold mt-4">Special title treatment</h5>
+			<p class="footer-p">
+				With supporting text below as a natural lead-in to additional content.
+			</p>
+			<img class="img-fluid logo" src="https://www.pngmart.com/files/23/Kirby-Face-PNG-Transparent.png" alt="" />
+			<p class="footer-p">2024 © KIRBBO. Todos los Derechos Reservados</p>
+		</div>
+		<!-- Ícono de carrito de compras -->
+		<a href="#" class="cart-icon">
+			<i class="fas fa-shopping-cart"></i>
+			<span th:text="${session.carrito.calcularArticulos()}" class="cart-count"></span>
+			<!-- Contador de artículos -->
+		</a>
+	</div>
+</body>
+
+</html>
