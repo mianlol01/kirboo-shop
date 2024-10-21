@@ -15,7 +15,6 @@ public class Cliente {
 	private String idCliente;
 
 	@Column(name = "username_cliente", length = 50, nullable = false, unique = true)
-
 	private String usernameCliente;
 
 	@Column(name = "nombre_cliente", length = 50, nullable = false)
@@ -26,6 +25,9 @@ public class Cliente {
 
 	@Column(name = "address_cliente", length = 255, nullable = false)
 	private String addressCliente;
+
+	@Column(name = "telefono_cliente", length = 50, nullable = false)
+	private String telefonoCliente;
 
 	@Column(name = "password_cliente", length = 50, nullable = false)
 	private String passwordCliente;

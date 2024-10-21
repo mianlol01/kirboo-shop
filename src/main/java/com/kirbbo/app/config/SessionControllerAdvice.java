@@ -14,6 +14,7 @@ public class SessionControllerAdvice {
 		if (session.getAttribute("carrito") == null) {
 			session.setAttribute("carrito", carrito);
 			System.out.println(carrito.calcularArticulos());
+			carrito.setAddress("");
 		}
 	}
 }

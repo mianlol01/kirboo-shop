@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>KIRBBO CARRITO</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+	<!-- Navbar -->
+	<div th:replace="~{fragments :: navbar}"></div>
+	<!-- Fin Navbar -->
+	<!-- MAIN INICIO -->
+	<div class="container text-center mt-5">
+		<h1 class="fs-1 fw-bold">USUARIO</h1>
+		<div class="mt-2">
+			<h2 class="fs-2 fw-bold text-start subt">PERFIL</h2>
+			<div class="container mt-5">
+				<!-- User Info -->
+				<div class="card">
+					<div class="card-header">
+						<h4>Información del Usuario</h4>
+					</div>
+					<div class="card-body">
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="codigoUsuario" class="form-label">Código:</label>
+								<input type="text" class="form-control" id="codigoUsuario"
+									th:value="${session.cliente.idCliente}" readonly />
+							</div>
+							<div class="col-md-6">
+								<label for="usernameUsuario" class="form-label">Nombre de Usuario:</label>
+								<input type="text" class="form-control" id="usernameUsuario"
+									th:value="${session.cliente.usernameCliente}" readonly />
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="nombreUsuario" class="form-label">Nombre:</label>
+								<input type="text" class="form-control" id="nombreUsuario"
+									th:value="${session.cliente.nombreCliente}" readonly />
+							</div>
+							<div class="col-md-6">
+								<label for="apellidoUsuario" class="form-label">Apellido:</label>
+								<input type="text" class="form-control" id="apellidoUsuario"
+									th:value="${session.cliente.apellidoCliente}" readonly />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Edit Telefono -->
+				<div class="card mt-3">
+					<div class="card-body">
+						<h5>Teléfono</h5>
+						<form action="editar-telefono" method="post">
+							<div class="input-group">
+								<input name="telefono" type="text" class="form-control" id="telefonoUsuario"
+									th:value="${session.cliente.telefonoCliente}" placeholder="Nuevo Teléfono"
+									pattern="[0-9]{9,15}" />
+								<button class="btn btn-primary" type="submit">Guardar</button>
+							</div>
+						</form>
+						<div class="text-success" th:text="${mensajeTelefono}"></div>
+					</div>
+				</div>
+
+				<!-- Edit Direccion -->
+				<div class="card mt-3">
+					<div class="card-body">
+						<h5>Dirección</h5>
+						<form action="editar-address" method="post">
+							<div class="input-group">
+								<input name="address" type="text" class="form-control" id="direccionUsuario"
+									th:value="${session.cliente.addressCliente}" placeholder="Nueva Dirección" />
+								<button class="btn btn-primary" type="submit">Guardar</button>
+							</div>
+						</form>
+						<div class="text-success" th:text="${mensajeAddress}"></div>
+					</div>
+				</div>
+
+				<!-- Logout Button -->
+				<div class="d-flex justify-content-center mt-3">
+					<form action="/logout" method="post">
+						<button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- MAIN FIN -->
+	<!-- FOTTER INICIO -->
+	<div th:replace="~{fragments :: footer}"></div>
+	<!-- FOOTER FIN -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

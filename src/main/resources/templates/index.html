@@ -31,109 +31,20 @@
 			<!-- Columna 2, ocupa 3/4 del ancho (proporción 3) -->
 			<div class="col-12 col-md-9 text-white pe-0">
 				<div class="d-flex overflow-auto text-center banner-scroll">
-					<li class="card card-custom-banner overflow-hidden mb-4">
+					<li th:each="producto : ${listaDestacados}" class="card card-custom-banner overflow-hidden mb-4">
 						<div class="discount-badge rounded-pill">
 							<span>20% OFF</span>
 						</div>
-						<img src="images/image.png" class="" alt="Imagen 1" />
+						<img th:src="${producto.ruta()}" src="images/image.png" class="" alt="Imagen 1" />
 						<div class="card-body">
-							<h5 class="card-title fs-3 fw-bold">Título del Artículo</h5>
-							<p class="text-start card-text m-0">
-								Este es un breve resumen o descripción del artículo.
-							</p>
-							<p class="text-dark font-monospace fs-4">
-								<span class="precio-anterior">S/.25.00</span>
-								<strong>S/.20.00</strong>
-							</p>
-							<a class="btn btn-custom rounded-pill"> COMPRAR </a>
-						</div>
-					</li>
-					<li class="card card-custom-banner overflow-hidden mb-4">
-						<div class="discount-badge rounded-pill">
-							<span>20% OFF</span>
-						</div>
-						<img src="images/image.png" class="" alt="Imagen 1" />
-						<div class="card-body d-flex flex-column justify-content-between">
-							<h5 class="card-title fs-3 fw-bold">Título del Artículo</h5>
-							<p class="text-start card-text m-0">
-								Este es un breve resumen o descripción del artículo.
-							</p>
-							<p class="text-dark font-monospace fs-4">
-								<span class="precio-anterior">S/.25.00</span>
-								<strong>S/.20.00</strong>
-							</p>
+							<h5 class="card-title fs-3 fw-bold" th:text="${producto.nombreProducto}">Título del Artículo
+							</h5>
+							<p class="precio-anterior" th:text="'S/' + ${producto.precioFormato()}">S/.25.00</p>
+							<p class="fs-4 fw-bold" th:text="'S/' + ${producto.precioFinalFormato()}">S/.20.00</p>
 							<div>
-								<a class="btn btn-custom rounded-pill"> COMPRAR </a>
-							</div>
-						</div>
-					</li>
-					<li class="card card-custom-banner overflow-hidden mb-4">
-						<div class="discount-badge rounded-pill">
-							<span>20% OFF</span>
-						</div>
-						<img src="images/image.png" class="" alt="Imagen 1" />
-						<div class="card-body">
-							<h5 class="card-title fs-3 fw-bold">Título del Artículo</h5>
-							<p class="text-start card-text m-0">
-								Este es un breve resumen o descripción del artículo.
-							</p>
-							<p class="text-dark font-monospace fs-4">
-								<span class="precio-anterior">S/.25.00</span>
-								<strong>S/.20.00</strong>
-							</p>
-							<a class="btn btn-custom rounded-pill"> COMPRAR </a>
-						</div>
-					</li>
-					<li class="card card-custom-banner overflow-hidden mb-4">
-						<div class="discount-badge rounded-pill">
-							<span>20% OFF</span>
-						</div>
-						<img src="images/image.png" class="" alt="Imagen 1" />
-						<div class="card-body">
-							<h5 class="card-title fs-3 fw-bold">Título del Artículo</h5>
-							<p class="text-start card-text m-0">
-								Este es un breve resumen o descripción del artículo.
-							</p>
-							<p class="text-dark font-monospace fs-4">
-								<span class="precio-anterior">S/.25.00</span>
-								<strong>S/.20.00</strong>
-							</p>
-							<a class="btn btn-custom rounded-pill"> COMPRAR </a>
-						</div>
-					</li>
-					<li class="card card-custom-banner overflow-hidden mb-4">
-						<div class="discount-badge rounded-pill">
-							<span>20% OFF</span>
-						</div>
-						<img src="images/image.png" class="" alt="Imagen 1" />
-						<div class="card-body">
-							<h5 class="card-title fs-3 fw-bold">Título del Artículo</h5>
-							<p class="text-start card-text m-0">
-								Este es un breve resumen o descripción del artículo.
-							</p>
-							<p class="text-dark font-monospace fs-4">
-								<span class="precio-anterior">S/.25.00</span>
-								<strong>S/.20.00</strong>
-							</p>
-							<a class="btn btn-custom rounded-pill"> COMPRAR </a>
-						</div>
-					</li>
-					<li class="card card-custom-banner overflow-hidden mb-4">
-						<div class="discount-badge rounded-pill">
-							<span>20% OFF</span>
-						</div>
-						<img src="images/image.png" class="" alt="Imagen 1" />
-						<div class="card-body d-flex flex-column justify-content-between">
-							<h5 class="card-title fs-3 fw-bold">Título del Artículo</h5>
-							<p class="text-start card-text m-0">
-								Este es un breve resumen o descripción del artículo.
-							</p>
-							<p class="text-dark font-monospace fs-4">
-								<span class="precio-anterior">S/.25.00</span>
-								<strong>S/.20.00</strong>
-							</p>
-							<div>
-								<a class="btn btn-custom rounded-pill"> COMPRAR </a>
+								<a class="btn btn-custom rounded-pill"
+									th:href="@{/detalles?producto={idProducto}(idProducto=${producto.idProducto})}">
+									COMPRAR </a>
 							</div>
 						</div>
 					</li>

@@ -33,4 +33,18 @@ public class ProductoService {
 	public Producto obtenerProductoPorId(int idProducto) {
 		return productoRepository.findById(idProducto).get();
 	}
+
+	public int actualizar(Producto p) {
+		try {
+			Producto producto = obtenerProductoPorId(p.getIdProducto());
+			producto.setDescuento(p.getDescuento());
+			producto.setPrecio(p.getPrecio());
+			producto.setStock(p.getStock());
+			productoRepository.save(producto);
+			return 1;
+		} catch (Exception e) {
+			return 0;
+		}
+
+	}
 }

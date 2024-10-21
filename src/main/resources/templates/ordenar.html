@@ -23,9 +23,10 @@
 		<h1 class="fs-1 fw-bold">ORDENAR</h1>
 		<div>
 			<h2 class="fs-2 fw-bold text-start subt">CARRITO DE COMPRAS</h2>
-			<div class="bg-light">
-				<img class="logo m-3" src="https://www.pngmart.com/files/23/Kirby-Face-PNG-Transparent.png"/>
-				<h1 class="fs-3 text-danger">Su carrito de compras esta vacío, porfavor agregue artículos a su orden</h1>
+			<div th:if="${session.carrito.calcularArticulos() == 0}" class="bg-light">
+				<img class="logo m-3" src="https://www.pngmart.com/files/23/Kirby-Face-PNG-Transparent.png" />
+				<h1 class="fs-3 text-danger">Su carrito de compras esta vacío, porfavor agregue artículos a su orden
+				</h1>
 			</div>
 			<div th:if="${session.carrito.calcularArticulos() > 0}" class="bg-light">
 				<div class="overflow-auto">
@@ -34,30 +35,43 @@
 							<tr class="text-center">
 								<th scope="col">#</th>
 								<th scope="col">Producto</th>
-								<th scope="col">Precio</th>
+								<th scope="col">Precio regular</th>
+								<th scope="col">Descuento</th>
+								<th scope="col">Precio descuento</th>
 								<th scope="col">Cantidad</th>
 								<th scope="col">Importe</th>
 								<th scope="col">Eliminar</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
+							<tr th:each="detalle : ${session.carrito.detalles}" class="text-center">
 								<th scope="row">
-									<img class="img-cart" src="images/image.png" alt="" />
+									<img class="img-cart" th:src="${detalle.producto.ruta()}" alt="" />
 								</th>
-								<td>Postre asd</td>
-								<td class="fw-bold">S./20.00</td>
+								<td th:text="${detalle.descripcion}"></td>
+								<td th:text="'S/'+${detalle.producto.precioFormato()}"></td>
+								<td th:text="${detalle.descuento}+'%'"></td>
+								<td th:text="'S/'+${detalle.producto.precioFinalFormato()}" class="fw-bold"></td>
 								<td>
-									<form>
+									<form action="editar-carrito" method="post">
 										<div class="d-flex justify-content-center">
-											<input class="text-center input-number-custom fw-bold" type="number"
-												value="1" />
-											<button class="btn btn-warning ms-2">Editar</button>
+											<input name="cantidad" class="text-center input-number-custom fw-bold"
+												type="number" th:value="${detalle.cantidad}" min="1"
+												th:max="${detalle.producto.stock}" />
+											<input name="id_producto" type="hidden"
+												th:value="${detalle.getProducto().getIdProducto()}" />
+											<button type="submit" class="btn btn-warning ms-2">Editar</button>
 										</div>
 									</form>
 								</td>
-								<td class="fw-bold">S./20.00</td>
-								<td><button class="btn btn-danger">Eliminar</button></td>
+								<td th:text="'S/'+${detalle.importeFormato()}" class="fw-bold"></td>
+								<td>
+									<form action="eliminar-carrito" method="post">
+										<input name="id_producto" type="hidden"
+											th:value="${detalle.getProducto().getIdProducto()}" />
+										<button class="btn btn-danger">Eliminar</button>
+									</form>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -68,7 +82,7 @@
 							<thead>
 								<tr class="text-center">
 									<th scope="col">Dirección de envío</th>
-									<th scope="col">Cantidad de productos</th>
+									<th scope="col">Cantidad de artículos</th>
 									<th scope="col">Total</th>
 									<th scope="col">Procesar compra</th>
 								</tr>
@@ -77,26 +91,34 @@
 								<tr class="text-center">
 									<th>
 										<div class="d-flex justify-content-center">
-											<form action="">
-												<input class="text-center input-dic-custom fw-bold" type="text"
-													value="Av. dsad asdsa  asdasd asd as sd" />
-												<button class="btn btn-warning ms-2">Editar</button>
-												<button class="btn btn-secondary ms-2">
+											<form action="editarPedidoAddress" method="post">
+												<input name="address" class="text-center input-dic-custom fw-bold"
+													type="text" th:value="${session.carrito.address}" required />
+												<button type="submit" class="btn btn-warning ms-2">Editar</button>
+											</form>
+											<form action="reestablecerPedidoAddress" method="post">
+												<button type="submit" class="btn btn-secondary ms-2">
 													Reestablecer
 												</button>
 											</form>
+
 										</div>
 									</th>
-									<th>1</th>
-									<td class="fw-bold">S./20.00</td>
+									<th th:text="${session.carrito.calcularArticulos()}"></th>
+									<td th:text="'S/'+${session.carrito.totalFormato()}" class="fw-bold"></td>
 
-									<td><button class="btn btn-success">Ordenar</button></td>
+									<td>
+										<form action="/pedido" method="post"><button type="submit"
+												class="btn btn-success">Ordenar</button></form>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
+
 				</div>
-				<div class="alert alert-info text-center" role="alert">
+				<div th:if="${mensaje}" class="alert alert-dark" th:text="${mensaje}"></div>
+				<div th:if="${session.cliente == null}" class="alert alert-info text-center" role="alert">
 					Debe <a href="#" class="alert-link">Iniciar Sesión</a> para poder
 					procesar su orden.
 				</div>

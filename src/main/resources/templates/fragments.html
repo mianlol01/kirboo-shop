@@ -41,10 +41,17 @@
 							<a class="nav-link fs-3 fw-bold" href="/ordenar">ORDENAR</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link fs-3 fw-bold" href="/pedidos">PEDIDOS</a>
+							<a class="nav-link fs-3 fw-bold" href="/pedido">PEDIDOS</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link fs-3 fw-bold" href="/usuario">USUARIO</a>
+						<!-- Mostrar este elemento si no existe el atributo "cliente" en la sesión -->
+						<li th:if="${session.cliente == null}" class="nav-item">
+							<a class="nav-link fs-3 fw-bold" href="/login">USUARIO</a>
+						</li>
+
+						<!-- Mostrar este elemento si existe el atributo "cliente" en la sesión -->
+						<li th:if="${session.cliente != null}" class="nav-item">
+							<a class="nav-link fs-3 fw-bold " href="/perfil"
+								th:text="${session.cliente.usernameCliente}"></a>
 						</li>
 					</ul>
 				</div>
@@ -63,11 +70,79 @@
 			<p class="footer-p">2024 © KIRBBO. Todos los Derechos Reservados</p>
 		</div>
 		<!-- Ícono de carrito de compras -->
-		<a href="#" class="cart-icon">
+		<a href="/ordenar" class="cart-icon">
 			<i class="fas fa-shopping-cart"></i>
 			<span th:text="${session.carrito.calcularArticulos()}" class="cart-count"></span>
 			<!-- Contador de artículos -->
 		</a>
+	</div>
+	<div th:fragment="navbar-repartidor">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<div class="container-fluid">
+				<a class="navbar-brand fs-2">KIRBBO ADMIN</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link fs-2" href="/repartidor">INICIO</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link fs-2" href="/repartidor-pedidos">GESTIONAR PEDIDOS</a>
+						</li>
+					</ul>
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle fs-3" type="button" id="dropdownMenuButton"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							Usuario
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<li>
+								<form action="admin-logout" method="post"><button type="submit"
+										class="dropdown-item">Cerrar Sesión</button></form>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+	</div>
+	<div th:fragment="navbar-admin">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<div class="container-fluid">
+				<a class="navbar-brand fs-2">KIRBBO ADMIN</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link fs-2" href="/admin">INICIO</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link fs-2" href="/admin-inventario">GESTIONAR INVENTARIO</a>
+						</li>
+					</ul>
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle fs-3" type="button" id="dropdownMenuButton"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							Usuario
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<li>
+								<form action="admin-logout" method="post"><button type="submit"
+										class="dropdown-item">Cerrar Sesión</button></form>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+
 	</div>
 </body>
 
