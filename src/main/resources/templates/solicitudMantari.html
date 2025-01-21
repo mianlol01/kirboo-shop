@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulario de Solicitud</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<!-- Contenedor para centrar el contenido -->
+	<div class="d-flex justify-content-center align-items-center vh-100">
+		<div class="w-50 w-md-25 p-4 shadow bg-light">
+			<h2 class="text-center mb-4">Formulario de Solicitud</h2>
+			<form th:action="@{/solicitud}" th:object="${solicitud}" method="post">
+				<!-- Campo Nombre -->
+				<div class="mb-3">
+					<label for="nombre" class="form-label">Nombre</label>
+					<input type="text" class="form-control" id="nombre" name="nombre" th:field="*{nombre}" required>
+				</div>
+
+				<!-- Campo Apellido -->
+				<div class="mb-3">
+					<label for="apellido" class="form-label">Apellido</label>
+					<input type="text" class="form-control" id="apellido" name="apellido" th:field="*{apellido}"
+						required>
+				</div>
+
+				<!-- Campo Monto -->
+				<div class="mb-3">
+					<label for="monto" class="form-label">Monto</label>
+					<input type="number" class="form-control" id="monto" name="monto" step="0.01" th:field="*{monto}"
+						required>
+				</div>
+
+				<!-- Campo Cuotas -->
+				<div class="mb-3">
+					<label for="cuotas" class="form-label">Cuotas</label>
+					<select class="form-select" id="cuotas" name="cuotas" th:field="*{cuotas}" required>
+						<option value="" disabled selected>Seleccione cuotas</option>
+						<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}"></option>
+					</select>
+				</div>
+
+				<!-- Campo Fecha (solo lectura) -->
+				<div class="mb-3">
+					<label for="fecha" class="form-label">Fecha de Registro</label>
+					<input type="text" class="form-control" id="fecha" name="fecha" th:field="*{fchRegistro}" readonly>
+				</div>
+
+				<!-- Campo Tipo -->
+				<div class="mb-3">
+					<label for="tipo" class="form-label">Tipo</label>
+					<select class="form-select" id="tipo" name="tipo" th:field="*{tipo}" required>
+						<option value="" disabled selected>Seleccione tipo</option>
+						<th:block th:each="tipo : ${tipos}">
+							<option th:value="${tipo.idtipo}" th:text="${tipo.desTipo}"></option>
+						</th:block>
+					</select>
+				</div>
+				<div class="text-success mb-3" th:text="${mensaje}"></div>
+				<!-- Botón de Solicitar -->
+				<button type="submit" class="btn btn-primary w-100">Solicitar</button>
+
+				<!-- Otros botones -->
+				<div class="mt-3 d-flex justify-content-between">
+					<a href="#" class="btn btn-secondary">Listar</a>
+					<a href="#" class="btn btn-danger">PDF</a>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+	</script>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

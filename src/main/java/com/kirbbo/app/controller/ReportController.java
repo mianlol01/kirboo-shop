@@ -55,4 +55,21 @@ public class ReportController {
 			e.printStackTrace();
 		}
 	}
+	@GetMapping("/reporte")
+	public void reporte(HttpServletResponse response) {
+		// opción 1
+		response.setHeader("Content-Disposition", "attachment; filename=\"reporte.pdf\";");
+		// opción 2
+		response.setHeader("Content-Disposition", "inline;");
+
+		response.setContentType("application/pdf");
+		try {
+			String ru = resourceLoader.getResource("classpath:static/reporte.jasper").getURI().getPath();
+			JasperPrint jasperPrint = JasperFillManager.fillReport(ru, null, dataSource.getConnection());
+			OutputStream outStream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

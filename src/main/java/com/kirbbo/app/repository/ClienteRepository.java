@@ -1,5 +1,6 @@
 package com.kirbbo.app.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +15,12 @@ public interface ClienteRepository extends JpaRepository<Cliente, String> {
 	Optional<Cliente> findByUsernameCliente(String usernameCliente);
 
 	@Query("SELECT c.idCliente FROM Cliente c ORDER BY c.idCliente DESC")
-	Optional<String> findLastClienteId();
+	List<String> findAllClienteIds();
+
+	default Optional<String> findLastClienteId() {
+		List<String> ids = findAllClienteIds();
+		return ids.isEmpty() ? Optional.empty() : Optional.of(ids.get(0));
+	}
 
 	Optional<Cliente> findByUsernameClienteAndPasswordCliente(String usernameCliente, String passwordCliente);
 
